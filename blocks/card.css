@@ -4,9 +4,13 @@
 }
 
 .card__title {
+  max-width: 353px;
   font-weight: 500;
   font-size: 20px;
   line-height: 120%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .card__image {
@@ -32,9 +36,17 @@
   opacity: 40%;
 }
 
+.card__like-button:hover {
+  opacity: 100%;
+}
+
 @media screen and (max-width: 627px) {
   .card__title {
     font-size: 16px;
+    max-width: 260px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
   }
 
   .card {
