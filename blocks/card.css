@@ -1,0 +1,49 @@
+.card {
+  max-width: 413px;
+  border-radius: 4px;
+}
+
+.card__title {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 120%;
+}
+
+.card__image {
+  height: 413px;
+  width: 413px;
+  object-fit: cover;
+  display: block;
+  border-radius: 8px;
+}
+
+.card__content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card__like-button {
+  background-image: url(../images/spots-images/heart\ icon.svg);
+  width: 23px;
+  height: 20px;
+  border: none;
+  background-color: transparent;
+  opacity: 40%;
+}
+
+@media screen and (max-width: 627px) {
+  .card__title {
+    font-size: 16px;
+  }
+
+  .card {
+    max-width: 288px;
+    align-items: center;
+  }
+
+  .card__image {
+    width: 288px;
+    height: 288px;
+  }
+}
