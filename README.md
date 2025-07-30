@@ -14,6 +14,7 @@ This is a site for sharing images.
 - Figma
 - Images
 - Github
+- Video
 
 **Intro**
 
@@ -26,6 +27,10 @@ This project is made so all the elements are displayed correctly on popular scre
 **Github**
 
 - [Link to the project on Github](https://whenson3.github.io/se_project_spots/)
+
+**Video**
+
+- [Link to my google drive video](https://drive.google.com/file/d/1lSCnidm-M6IjntV4WtvYTu6lWl6tkAkV/view?usp=drive_link)
 
 **Images**
 
