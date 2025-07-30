@@ -58,7 +58,7 @@
 
 .profile__edit-button:hover {
   cursor: pointer;
-  color: rgba(33, 33, 33, 0.8);
+  opacity: 0.8;
 }
 
 .profile__add-button {
@@ -78,13 +78,7 @@
 
 .profile__add-button:hover {
   cursor: pointer;
-  background-color: rgba(33, 33, 33, 0.8);
-}
-
-.profile__add-button img {
-  width: 12px;
-  height: 12px;
-  margin-right: 8px;
+  opacity: 0.8;
 }
 
 @media screen and (max-width: 627px) {
