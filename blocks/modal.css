@@ -73,6 +73,7 @@
   font-size: 20px;
   line-height: 100%;
   letter-spacing: 0;
+  box-sizing: border-box;
 }
 
 .modal__input::placeholder {
@@ -94,4 +95,7 @@
   .modal__submit-btn {
     max-width: 276px;
   }
+  .modal__container {
+  padding: 12px;
+}
 }
