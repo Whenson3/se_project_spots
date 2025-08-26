@@ -1,5 +1,7 @@
 .modal {
   visibility: hidden;
+  opacity: 0;
+  transition: visibility 0.3s, opacity 0.3s ease-in;
   background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
   top: 0;
@@ -19,6 +21,7 @@
 
 .modal_is-opened {
   visibility: visible;
+  opacity: 1;
 }
 
 .modal__container {
@@ -39,6 +42,7 @@
   right: 50px;
   width: 40px;
   height: 40px;
+  background-color: #fff;
 }
 
 .modal__title {
@@ -97,5 +101,9 @@
   }
   .modal__container {
   padding: 12px;
+}
+.modal__close-btn {
+  top: 12px;
+  right: 12px;
 }
 }
