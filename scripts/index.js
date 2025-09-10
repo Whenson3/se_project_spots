@@ -102,7 +102,17 @@ function handleAddCardSubmit(evt) {
 }
 
 
-addCardFormElement.addEventListener("submit", handleAddCardSubmit);
+addCardFormElement.addEventListener("submit", function (evt) {
+  evt.preventDefault();
+
+    const inputValues = {
+    name: captionInput.value,
+    link: imageLinkEl.value,
+  };
+
+  const cardElement = getCardElement(inputValues);
+ cardsList.prepend(cardElement);
+});
 
 initialCards.forEach(function (item) {
  const cardElement = getCardElement(item);
