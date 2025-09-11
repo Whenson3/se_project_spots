@@ -60,7 +60,13 @@ function getCardElement(data){
   const cardLikeBtnEl = cardElement.querySelector(".card__like-button");
   cardLikeBtnEl.addEventListener("click", () => {
     cardLikeBtnEl.classList.toggle("card__like-button_active");
-  })
+  });
+
+  const cardDeleteBtnEl = cardElement.querySelector(".card__delete-button");
+  cardDeleteBtnEl.addEventListener("click", () => {
+    cardElement.remove();
+    cardElement = null;
+  });
 
   return cardElement;
 }
