@@ -57,6 +57,11 @@ function getCardElement(data){
   cardImageEl.alt = data.name;
   cardTitleEl.textContent = data.name;
 
+  const cardLikeBtnEl = cardElement.querySelector(".card__like-button");
+  cardLikeBtnEl.addEventListener("click", () => {
+    cardLikeBtnEl.classList.toggle("card__like-button_active");
+  })
+
   return cardElement;
 }
 
@@ -111,7 +116,9 @@ addCardFormElement.addEventListener("submit", function (evt) {
   };
 
   const cardElement = getCardElement(inputValues);
- cardsList.prepend(cardElement);
+  cardsList.prepend(cardElement);
+
+  addCardModal.classList.remove("modal_is-opened");
 });
 
 initialCards.forEach(function (item) {

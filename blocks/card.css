@@ -37,9 +37,19 @@
   margin: 12px 0 0;
 }
 
+
 .card__like-button:hover {
   cursor: pointer;
   opacity: 100%;
+}
+
+.card__like-button_active {
+  background-image: url(../images/spots-images/Red\ Heart.svg);
+  opacity: 1;
+}
+
+.card__like-button_active:hover {
+   opacity: 0.4;
 }
 
 @media screen and (max-width: 627px) {
