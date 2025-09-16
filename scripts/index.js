@@ -125,19 +125,13 @@ function handleEditProfileSubmit(evt) {
 
 editProfileForm.addEventListener("submit", handleEditProfileSubmit);
 
-function handleAddCardSubmit(evt) {
-  evt.preventDefault();
-  console.log(captionInput.value)
-  closeModal(newPostModal);
-}
-
 
 addCardFormElement.addEventListener("submit", function (evt) {
   evt.preventDefault();
 
     const inputValues = {
     name: captionInput.value,
-    link: imageLinkEl.value,
+    link: imageUrlInput.value,
   };
 
   const cardElement = getCardElement(inputValues);

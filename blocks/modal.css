@@ -84,6 +84,11 @@
   opacity: 0.4;
 }
 
+.modal__close-btn:hover {
+  cursor: pointer;
+  opacity: 100%;
+}
+
 .modal__close-btn_type_preview {
   background-image: url(../images/spots-images/close=default.svg);
   top: 0;
@@ -99,6 +104,10 @@
 .modal__title {
   margin: 0 0 32px;
   max-width: 630px;
+  font-family: Poppins, Arial, Helvetica, sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 100%;
 }
 
 .modal__form {
@@ -143,10 +152,12 @@
   border-radius: 8px;
   background-color: rgba(33, 33, 33, 1);
   color: #fff;
+  border: none;
 }
 
 .modal__submit-btn:hover {
   cursor: pointer;
+  opacity: 80%;
 }
 
 @media screen and (max-width: 627px) {
