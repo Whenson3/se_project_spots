@@ -68,7 +68,7 @@
 
 
 .modal__close-btn {
-  background: transparent url(../images/spots-images/Close-Icon.svg) center no-repeat;
+  background: transparent url(../images/spots-images/Property\ 1=Variant2\ \1\.svg) center no-repeat;
   background-size: 35px 35px;
   color: rgba(33, 33, 33, 1);
   border: none;
@@ -81,7 +81,7 @@
   margin: 0;
   transition: 0.3s;
   cursor: pointer;
-  opacity: 100%;
+  opacity: 40%;
 }
 
 .modal__close-btn:hover {

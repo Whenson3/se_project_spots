@@ -136,8 +136,8 @@ addCardFormElement.addEventListener("submit", function (evt) {
 
   const cardElement = getCardElement(inputValues);
   cardsList.prepend(cardElement);
-
-  newPostModal.classList.remove("modal_is-opened");
+  newPostForm.reset();
+  closeModal(newPostModal);
 });
 
 initialCards.forEach(function (item) {
