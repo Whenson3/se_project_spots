@@ -83,9 +83,6 @@ function getCardElement(data){
     openModal(previewModal);
   });
 
-  cardImageEl.addEventListener("click",function () {
-    closeModal(previewImageEl);
-  });
 
   return cardElement;
 }
@@ -136,7 +133,7 @@ addCardFormElement.addEventListener("submit", function (evt) {
 
   const cardElement = getCardElement(inputValues);
   cardsList.prepend(cardElement);
-  newPostForm.reset();
+  addCardFormElement.reset();
   closeModal(newPostModal);
 });
 
