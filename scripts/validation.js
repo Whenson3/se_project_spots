@@ -1,18 +1,18 @@
 const showInputError = (formEl, inputEl, errorMsg) => {
-  const errorMsgId = inputEl.id + "-error";
-  const errorMsgEl = document.querySelector("#" + errorMsgId);
+  const errorMsgEl = formEl.querySelector(`#${inputEl.id}-error`);
   errorMsgEl.textContent = errorMsg;
 };
 
 const hideInputError = (formEl, inputEl) => {
-  const errorMsgId = inputEl.id + "-error";
-  const errorMsgEl = document.querySelector("#" + errorMsgId);
+   const errorMsgEl = formEl.querySelector(`#${inputEl.id}-error`);
   errorMsgEl.textContent = "";
 };
 
 const checkInputValidity = (formEl, inputEl) => {
   if (!inputEl.validity.valid) {
     showInputError(formEl, inputEl, inputEl.validationMessage);
+  } else {
+    hideInputError(formEl, inputEl)
   }
 };
 
