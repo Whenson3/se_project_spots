@@ -52,7 +52,7 @@
   height: 20px;
   border: none;
   background-color: transparent;
-  opacity: 40%;
+  opacity: 0.4;
   margin: 12px 0 0;
   background-repeat: no-repeat;
 }
@@ -81,6 +81,10 @@
   .card {
     max-width: 288px;
     align-items: center;
+  }
+
+  .card__like-button {
+    opacity: 0.4;
   }
 
   .card__image {
