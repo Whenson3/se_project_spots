@@ -100,13 +100,13 @@ function handleEscapeKey(evt) {
 function openModal(modal) {
   modal.classList.add("modal_is-opened");
   document.addEventListener("keydown", handleEscapeKey);
-  modal.addEventListener("click", handleOverlayClick);
+  modal.addEventListener("click", handleEscapeKey);
 }
 
 function closeModal(modal) {
   modal.classList.remove("modal_is-opened");
   document.removeEventListener("keydown", handleEscapeKey);
-  modal.removeEventListener("click", handleOverlayClick);
+  modal.removeEventListener("click", handleEscapeKey);
 }
 
 editProfileBtn.addEventListener("click", function () {
