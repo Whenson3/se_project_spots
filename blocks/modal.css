@@ -193,6 +193,7 @@
   }
   .modal__container {
   padding: 12px;
+  max-width: 300px;
 }
 .modal__close-btn {
   top: 12px;
