@@ -160,6 +160,7 @@ addCardFormElement.addEventListener("submit", function (evt) {
   const cardElement = getCardElement(inputValues);
   cardsList.prepend(cardElement);
   addCardFormElement.reset();
+  disableButton(cardSubmitBtn);
 });
 
 initialCards.forEach(function (item) {
