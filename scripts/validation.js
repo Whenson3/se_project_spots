@@ -39,7 +39,7 @@ const toggleButtonState = (inputList, buttonEl, config) => {
     disableButton(buttonEl, config);
     } else {
     buttonEl.disabled = false;
-    buttonEl.classList.remove(inputList, buttonEl, config);
+    buttonEl.classList.remove(config.inactiveButtonClass);
   }
 };
 
