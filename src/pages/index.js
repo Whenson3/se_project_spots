@@ -1,5 +1,6 @@
 import "../pages/index.css";
-import { enableValidation, validationConfig } from "../scripts/validation.js";
+// adjust imports depending on validation.js exports; example below assumes you export 'config' as 'validationConfig' and exported resetValidation/disableButton
+import { enableValidation, config as validationConfig, resetValidation, disableButton } from "../scripts/validation.js";
 import { Api } from "../utils/Api.js";
 
 const api = new Api({
@@ -16,9 +17,10 @@ api.getInitialCards()
     cards.forEach(function (item) {
       const cardElement = getCardElement(item);
       cardsList.append(cardElement);
-   }).catch((err) => {
-       console.error(err);
-   });
+    });
+  })
+  .catch((err) => {
+    console.error(err);
   });
 
 
@@ -40,7 +42,7 @@ const editProfileModal = document.querySelector("#edit-profile-modal");
 const editProfileCloseBtn = editProfileModal.querySelector(".modal__close-btn");
 const newPostBtn = document.querySelector(".profile__add-button");
 const newPostModal = document.querySelector("#new-post-modal");
-const editProfileForm = document.querySelector(".modal__form");
+const editProfileForm = document.querySelector("#edit-profile-form");
 const editProfileNameInput = editProfileModal.querySelector("#profile-name-input");
 const editProfileDescriptionInput = editProfileModal.querySelector("#profile-description-input");
 const addCardFormElement = newPostModal.querySelector(".modal__form");
@@ -94,23 +96,19 @@ function getCardElement(data){
 
 function handleEscapeKey(evt) {
   if (evt.key === "Escape") {
-    const openModal = document.querySelector(".modal_is-opened");
-    if (openModal) {
-      closeModal(openModal);
-    }
+    const openedModalEl = document.querySelector(".modal_is-opened");
+    if (openedModalEl) closeModal(openedModalEl);
   }
 }
 
 function openModal(modal) {
   modal.classList.add("modal_is-opened");
   document.addEventListener("keydown", handleEscapeKey);
-  modal.addEventListener("click", handleEscapeKey);
 }
 
 function closeModal(modal) {
   modal.classList.remove("modal_is-opened");
   document.removeEventListener("keydown", handleEscapeKey);
-  modal.removeEventListener("click", handleEscapeKey);
 }
 
 editProfileBtn.addEventListener("click", function () {
@@ -155,7 +153,7 @@ addCardFormElement.addEventListener("submit", function (evt) {
   cardsList.prepend(cardElement);
   addCardFormElement.reset();
   closeModal(newPostModal);
-  disableButton(cardSubmitBtn, config);
+  disableButton(cardSubmitBtn, validationConfig);
 });
 
 

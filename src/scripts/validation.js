@@ -1,3 +1,6 @@
+import Api from "../utils/Api.js";
+import { enableValidation, config as validationConfig, resetValidation, disableButton } from "../scripts/validation.js";
+
 export const config = {
   formSelector: ".modal__form",
   inputSelector: ".modal__input",
@@ -56,7 +59,7 @@ const resetValidation = (formEl,inputList) => {
 
 const setEventListeners = (formEl, config) => {
   const inputList = Array.from(formEl.querySelectorAll(config.inputSelector));
-  const buttonElement = formEl.querySelector(config. submitButtonSelector);
+  const buttonElement = formEl.querySelector(config.submitButtonSelector);
 
 
   toggleButtonState(inputList, buttonElement, config);
@@ -75,6 +78,17 @@ export const enableValidation = (config) => {
     setEventListeners(formEl, config);
   });
 };
+
+export { resetValidation, disableButton };
+
+const addCardFormElement = newPostModal.querySelector("#card-form");
+const cardSubmitBtn = newPostModal.querySelector(".modal__submit-btn");
+const captionInput = newPostModal.querySelector("#card-caption-input");
+const imageUrlInput = newPostModal.querySelector("#card-image-input");
+
+
+const cardTemplate = document.querySelector("#card-template").content.querySelector(".card");
+const cardsList = document.querySelector(".cards__list");
 
 
 
