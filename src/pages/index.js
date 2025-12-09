@@ -11,18 +11,14 @@ const api = new Api({
   }
 });
 
-api.getInitialCards()
-  .then((cards) => {
-    console.log(cards);
+  api.getAppInfo()
+  .then(([cards]) => {
     cards.forEach(function (item) {
       const cardElement = getCardElement(item);
       cardsList.append(cardElement);
     });
   })
-  .catch((err) => {
-    console.error(err);
-  });
-
+  .catch(console.error);
 
 
 const modals = document.querySelectorAll(".modal");
