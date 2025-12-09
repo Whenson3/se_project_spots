@@ -1,36 +1,27 @@
 import "../pages/index.css";
 import { enableValidation, validationConfig } from "../scripts/validation.js";
+import { Api } from "../utils/Api.js";
 
-const initialCards = [
-    {
-  name: "Golden Gate Bridge",
-  link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/7-photo-by-griffin-wooldridge-from-pexels.jpg"
-  },
-    {
-  name:"Val Thorens",
-  link:"https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/1-photo-by-moritz-feldmann-from-pexels.jpg",
-  },
-    {
-  name:"Restaurant terrace",
-  link:"https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/2-photo-by-ceiline-from-pexels.jpg",
-  },
-    {
-  name:"An outdoor cafe",
-  link:"https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/3-photo-by-tubanur-dogan-from-pexels.jpg",
-  },
-    {
-  name:"A very long bridge, over the forest and through the trees",
-  link:"https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/4-photo-by-maurice-laschet-from-pexels.jpg",
-  },
-    {
-  name:"Tunnel with morning light",
-  link:"https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/5-photo-by-van-anh-nguyen-from-pexels.jpg",
-  },
-    {
-  name:"Mountain house",
-  link:"https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/6-photo-by-moritz-feldmann-from-pexels.jpg",
-  },
-];
+const api = new Api({
+  baseUrl: "https://around-api.en.tripleten-services.com/v1",
+  headers: {
+    authorization: "1948f53a-f1c5-4712-8302-5f7aa65616ae",
+    "Content-Type": "application/json"
+  }
+});
+
+api.getInitialCards()
+  .then((cards) => {
+    console.log(cards);
+    cards.forEach(function (item) {
+      const cardElement = getCardElement(item);
+      cardsList.append(cardElement);
+   }).catch((err) => {
+       console.error(err);
+   });
+  });
+
+
 
 const modals = document.querySelectorAll(".modal");
 
@@ -167,10 +158,7 @@ addCardFormElement.addEventListener("submit", function (evt) {
   disableButton(cardSubmitBtn, config);
 });
 
-initialCards.forEach(function (item) {
- const cardElement = getCardElement(item);
- cardsList.append(cardElement);
-});
+
 
 previewModalCloseBtn.addEventListener('click', () => closeModal(previewModal));
 
