@@ -1,7 +1,7 @@
 import "../pages/index.css";
 // adjust imports depending on validation.js exports; example below assumes you export 'config' as 'validationConfig' and exported resetValidation/disableButton
+import Api from "../utils/Api.js";
 import { enableValidation, config as validationConfig, resetValidation, disableButton } from "../scripts/validation.js";
-import { Api } from "../utils/Api.js";
 
 const api = new Api({
   baseUrl: "https://around-api.en.tripleten-services.com/v1",
@@ -41,7 +41,7 @@ const newPostModal = document.querySelector("#new-post-modal");
 const editProfileForm = document.querySelector("#edit-profile-form");
 const editProfileNameInput = editProfileModal.querySelector("#profile-name-input");
 const editProfileDescriptionInput = editProfileModal.querySelector("#profile-description-input");
-const addCardFormElement = newPostModal.querySelector(".modal__form");
+const addCardFormElement = newPostModal.querySelector("#card-form");
 const cardSubmitBtn = newPostModal.querySelector(".modal__submit-btn");
 const captionInput = newPostModal.querySelector("#card-caption-input");
 const imageUrlInput = newPostModal.querySelector("#card-image-input");

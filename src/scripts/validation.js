@@ -18,7 +18,7 @@ const showInputError = (formEl, inputEl, errorMsg) => {
 };
 
 const hideInputError = (formEl, inputEl) => {
-   const errorMsgEl = formEl.querySelector(`#${inputEl.id}-error`);
+  const errorMsgEl = formEl.querySelector(`#${inputEl.id}-error`);
   errorMsgEl.textContent = "";
   inputEl.classList.remove(config.inputErrorClass);
 };
@@ -27,7 +27,7 @@ const checkInputValidity = (formEl, inputEl) => {
   if (!inputEl.validity.valid) {
     showInputError(formEl, inputEl, inputEl.validationMessage);
   } else {
-    hideInputError(formEl, inputEl)
+    hideInputError(formEl, inputEl);
   }
 };
 
@@ -40,7 +40,7 @@ const hasInvalidInput = (inputList) => {
 const toggleButtonState = (inputList, buttonEl, config) => {
   if (hasInvalidInput(inputList)) {
     disableButton(buttonEl, config);
-    } else {
+  } else {
     buttonEl.disabled = false;
     buttonEl.classList.remove(config.inactiveButtonClass);
   }
@@ -89,6 +89,32 @@ const imageUrlInput = newPostModal.querySelector("#card-image-input");
 
 const cardTemplate = document.querySelector("#card-template").content.querySelector(".card");
 const cardsList = document.querySelector(".cards__list");
+
+class Api {
+  constructor({ baseUrl, headers }) {
+    this._baseUrl = baseUrl;
+    this._headers = headers;
+  }
+
+  getAppInfo() {
+    return Promise.all([this.getInitialCards()]);
+  }
+
+  getInitialCards() {
+    return fetch(`${this._baseUrl}/cards`, {
+      headers: this._headers,
+    }).then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Error: ${res.status}`);
+    });
+  }
+
+  //other methods for working with the API
+}
+
+export default Api;
 
 
 
