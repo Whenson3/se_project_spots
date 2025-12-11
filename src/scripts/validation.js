@@ -1,3 +1,4 @@
+// ========== CONFIGURATION ==========
 export const config = {
   formSelector: ".modal__form",
   inputSelector: ".modal__input",
@@ -7,6 +8,7 @@ export const config = {
   errorClass: "modal__error"
 };
 
+// ========== ERROR HANDLING ==========
 const showInputError = (formEl, inputEl, errorMsg) => {
   const errorMsgEl = formEl.querySelector(`#${inputEl.id}-error`);
   if (!errorMsgEl) return;
@@ -21,6 +23,7 @@ const hideInputError = (formEl, inputEl) => {
   inputEl.classList.remove(config.inputErrorClass);
 };
 
+// ========== VALIDATION CHECKS ==========
 const checkInputValidity = (formEl, inputEl) => {
   if (!inputEl.validity.valid) {
     showInputError(formEl, inputEl, inputEl.validationMessage);
@@ -33,20 +36,26 @@ const hasInvalidInput = (inputList) => {
   return inputList.some((input) => !input.validity.valid);
 };
 
+// ========== BUTTON STATE ==========
 const disableButton = (buttonEl, cfg) => {
   buttonEl.disabled = true;
   buttonEl.classList.add(cfg.inactiveButtonClass);
+};
+
+const enableButton = (buttonEl, cfg) => {
+  buttonEl.disabled = false;
+  buttonEl.classList.remove(cfg.inactiveButtonClass);
 };
 
 const toggleButtonState = (inputList, buttonEl, cfg) => {
   if (hasInvalidInput(inputList)) {
     disableButton(buttonEl, cfg);
   } else {
-    buttonEl.disabled = false;
-    buttonEl.classList.remove(cfg.inactiveButtonClass);
+    enableButton(buttonEl, cfg);
   }
 };
 
+// ========== FORM RESET & INITIALIZATION ==========
 const resetValidation = (formEl, inputList, cfg = config) => {
   inputList.forEach((input) => {
     hideInputError(formEl, input);
@@ -78,4 +87,5 @@ export const enableValidation = (cfg = config) => {
   });
 };
 
+// ========== EXPORTS ==========
 export { resetValidation, disableButton };

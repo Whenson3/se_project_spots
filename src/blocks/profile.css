@@ -1,21 +1,70 @@
+/* Profile block */
 .profile {
   display: flex;
   padding: 34px 0 20px;
   border-bottom: 1px rgba(33, 33, 33, 0.4) solid;
 }
 
-.profile__avatar {
-  height: 190px;
-  width: 190px;
+/* Avatar container & button */
+.profile__avatar-container {
+  position: relative;
   margin-right: 20px;
-  border-radius: 8px;
+  width: 190px;
+  height: 190px;
 }
 
+.profile__avatar {
+  width: 190px;
+  height: 190px;
+  border-radius: 8px;
+  display: block;
+  object-fit: cover;
+}
+
+.profile__avatar-btn {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 36px;
+  padding: 4px 10px;
+  border-radius: 18px;
+  background: transparent;
+  border: none;
+  visibility: hidden;
+}
+
+/* Show button on hover of the avatar container */
+.profile__avatar-container:hover .profile__avatar-btn {
+  visibility: visible;
+  cursor: pointer;
+}
+
+/* Tooltip/text below avatar button */
+.profile__avatar-btn::after {
+  content: 'Edit Avatar';
+  position: absolute;
+  bottom: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1;
+  color: #fff;
+  white-space: nowrap;
+}
+
+/* Column with name/description */
 .profile__column {
   display: flex;
   flex-direction: column;
 }
 
+/* Name */
 .profile__name {
   margin: 0 0 12px;
   font-weight: 500;
@@ -29,6 +78,7 @@
   -webkit-box-orient: vertical;
 }
 
+/* Description */
 .profile__description {
   margin: 0;
   font-weight: 500;
@@ -43,6 +93,7 @@
   -webkit-box-orient: vertical;
 }
 
+/* Small inline edit button */
 .profile__edit-button {
   display: flex;
   gap: 8px;
@@ -61,6 +112,7 @@
   opacity: 1;
 }
 
+/* Add / New post button */
 .profile__add-button {
   padding: 0;
   margin-left: auto;
@@ -81,6 +133,7 @@
   opacity: 0.8;
 }
 
+/* Responsive adjustments */
 @media screen and (max-width: 627px) {
   .profile {
     flex-direction: column;
@@ -90,10 +143,19 @@
     padding-top: 20px;
   }
 
+  .profile__avatar-btn {
+    visibility: visible;
+  }
+
+  .profile__avatar-btn::after {
+    visibility: hidden;
+  }
+
   .profile__avatar {
     margin: 0 0 12px;
     height: 80px;
     width: 80px;
+    border-radius: 8px;
   }
 
   .profile__name {

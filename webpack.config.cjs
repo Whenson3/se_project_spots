@@ -19,7 +19,7 @@ module.exports = {
   devServer: {
     static: path.resolve(__dirname, "./dist"),
     compress: true,
-    port: 8080,
+    port: 8081, // or any unused port
     open: true,
     liveReload: true,
     hot: false,
@@ -31,9 +31,6 @@ module.exports = {
         test: /\.js$/,
         loader: "babel-loader",
         exclude: /node_modules/,
-        options: {
-          sourceType: "unambiguous"
-        },
       },
       {
         test: /\.css$/,
