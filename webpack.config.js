@@ -31,6 +31,9 @@ module.exports = {
         test: /\.js$/,
         loader: "babel-loader",
         exclude: /node_modules/,
+        options: {
+          sourceType: "unambiguous"
+        },
       },
       {
         test: /\.css$/,
@@ -53,8 +56,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./src/index.html",
-      favicon: "./src/images/favicon.ico", // path to the favicon
+      template: "./src/index.html"
     }),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin(),
