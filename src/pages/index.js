@@ -51,6 +51,14 @@ const previewCaptionEl = previewModal.querySelector(".modal__caption");
 const cardTemplate = document.querySelector("#card-template").content.querySelector(".card");
 const cardsList = document.querySelector(".cards__list");
 
+// Delete Modal
+const deleteModal = document.querySelector("#delete-modal");
+const deleteModalCloseBtn = deleteModal.querySelector(".modal__close-btn");
+const deleteForm = document.querySelector("#delete-form");
+const deleteConfirmBtn = deleteForm.querySelector(".modal__delete-btn");
+const deleteCancelBtn = deleteForm.querySelector(".modal__cancel-btn");
+let cardToDelete = null;
+
 // ========== MODAL FUNCTIONS ==========
 function handleEscapeKey(evt) {
   if (evt.key === "Escape") {
@@ -86,7 +94,8 @@ function getCardElement(data) {
 
   const cardDeleteBtnEl = cardElement.querySelector(".card__delete-button");
   cardDeleteBtnEl.addEventListener("click", () => {
-    cardElement.remove();
+    cardToDelete = cardElement;
+    openModal(deleteModal);
   });
 
   cardImageEl.addEventListener("click", () => {
@@ -116,6 +125,25 @@ function handleCardSubmit(evt) {
     })
     .catch(console.error);
 }
+
+// ========== EVENT LISTENERS: DELETE MODAL ==========
+deleteModalCloseBtn.addEventListener("click", () => {
+  closeModal(deleteModal);
+  cardToDelete = null;
+});
+
+deleteCancelBtn.addEventListener("click", () => {
+  closeModal(deleteModal);
+  cardToDelete = null;
+});
+
+deleteConfirmBtn.addEventListener("click", () => {
+  if (cardToDelete) {
+    cardToDelete.remove();
+    closeModal(deleteModal);
+    cardToDelete = null;
+  }
+});
 
 // ========== EVENT LISTENERS: MODALS ==========
 const modals = document.querySelectorAll(".modal");
