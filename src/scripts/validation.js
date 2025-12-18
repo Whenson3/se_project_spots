@@ -61,7 +61,7 @@ const resetValidation = (formEl, inputList, cfg = config) => {
     hideInputError(formEl, input);
   });
   const button = formEl.querySelector(cfg.submitButtonSelector);
-  if (button) toggleButtonState(Array.from(formEl.querySelectorAll(cfg.inputSelector)), button, cfg);
+  if (button) toggleButtonState(inputList, button, cfg);
 };
 
 const setEventListeners = (formEl, cfg) => {
