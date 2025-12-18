@@ -14,6 +14,9 @@ const api = new Api({
 // ========== CONSTANTS ==========
 const isLikedClass = "card__like-button_active";
 
+// ========== STATE VARIABLES ==========
+let currentUser = null;
+
 // ========== DOM SELECTORS ==========
 // Profile
 const profileNameEl = document.querySelector(".profile__name");
@@ -96,7 +99,8 @@ function handleLikeButtonClick(cardId, cardLikeBtnEl) {
 
   likeAction
     .then((updatedCard) => {
-      if (updatedCard.isLiked) {
+      const isCardLiked = updatedCard.likes.some(user => user._id === currentUser._id);
+      if (isCardLiked) {
         cardLikeBtnEl.classList.add(isLikedClass);
       } else {
         cardLikeBtnEl.classList.remove(isLikedClass);
@@ -122,6 +126,17 @@ function getCardElement(data) {
   cardImageEl.src = data.link;
   cardImageEl.alt = data.name;
   cardTitleEl.textContent = data.name;
+
+  // Set initial like state
+  const isLiked = data.likes.some(user => user._id === currentUser._id);
+  if (isLiked) {
+    cardLikeBtnEl.classList.add(isLikedClass);
+  }
+
+  // Show delete button only for cards owned by current user
+  if (data.owner._id !== currentUser._id) {
+    cardDeleteBtnEl.style.display = "none";
+  }
 
   cardLikeBtnEl.addEventListener("click", () => handleLikeButtonClick(data._id, cardLikeBtnEl));
   cardDeleteBtnEl.addEventListener("click", () => handleDeleteCard(cardElement, data._id));
@@ -262,6 +277,9 @@ enableValidation(validationConfig);
 
 api.getAppInfo()
   .then(([cards, userInfo]) => {
+    // Store current user info
+    currentUser = userInfo;
+
     // Update profile information
     profileNameEl.textContent = userInfo.name;
     profileDescriptionEl.textContent = userInfo.about;
