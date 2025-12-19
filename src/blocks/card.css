@@ -64,7 +64,7 @@
 }
 
 .card__like-button_active {
-  background-image: url(../images/spots-images/Red\ Heart.svg);
+  background-image: url("../images/spots-images/Red Heart.svg");
   opacity: 1;
 }
 
