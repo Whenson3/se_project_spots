@@ -2,13 +2,6 @@ import "../pages/index.css";
 import Api from "../utils/Api.js";
 import { enableValidation, config as validationConfig, resetValidation, disableButton } from "../scripts/validation.js";
 
-// ========== IMAGE IMPORTS ==========
-import logoSrc from "../images/spots-images/Logo.svg";
-import avatarSrc from "../images/spots-images/avatar.jpg";
-import pencilIconSrc from "../images/spots-images/pencil-light.svg";
-import penIconSrc from "../images/spots-images/pen-icon.svg";
-import plusIconSrc from "../images/spots-images/plus-icon.svg";
-
 // ========== API INITIALIZATION ==========
 const api = new Api({
   baseUrl: "https://around-api.en.tripleten-services.com/v1",
@@ -280,13 +273,6 @@ deleteForm.addEventListener("submit", handleDeleteSubmit);
 previewModalCloseBtn.addEventListener("click", () => closeModal(previewModal));
 
 // ========== INITIALIZATION ==========
-// Set static images
-document.querySelector(".header__logo").src = logoSrc;
-document.querySelector(".profile__avatar").src = avatarSrc;
-document.querySelector(".profile__pencil-icon").src = pencilIconSrc;
-document.querySelector(".profile__edit-button img").src = penIconSrc;
-document.querySelector(".profile__add-button img").src = plusIconSrc;
-
 enableValidation(validationConfig);
 
 api.getAppInfo()
