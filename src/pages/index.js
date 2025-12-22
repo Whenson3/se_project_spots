@@ -2,6 +2,13 @@ import "../pages/index.css";
 import Api from "../utils/Api.js";
 import { enableValidation, config as validationConfig, resetValidation, disableButton } from "../scripts/validation.js";
 
+// ========== IMAGE IMPORTS ==========
+import logoImage from "../images/spots-images/Logo.svg";
+import avatarImage from "../images/spots-images/avatar.jpg";
+import pencilIcon from "../images/spots-images/pencil-light.svg";
+import penIcon from "../images/spots-images/pen-icon.svg";
+import plusIcon from "../images/spots-images/plus-icon.svg";
+
 // ========== API INITIALIZATION ==========
 const api = new Api({
   baseUrl: "https://around-api.en.tripleten-services.com/v1",
@@ -99,7 +106,17 @@ function handleLikeButtonClick(cardId, cardLikeBtnEl) {
 
   likeAction
     .then((updatedCard) => {
-      const isCardLiked = updatedCard.likes.some(user => user._id === currentUser._id);
+      // Defensive check: ensure updatedCard and required properties exist
+      if (!updatedCard || !updatedCard.likes || !Array.isArray(updatedCard.likes)) {
+        console.error("Invalid card data received from API");
+        return;
+      }
+      if (!currentUser || !currentUser._id) {
+        console.error("Current user data is missing");
+        return;
+      }
+
+      const isCardLiked = updatedCard.likes.some(user => user && user._id === currentUser._id);
       if (isCardLiked) {
         cardLikeBtnEl.classList.add(isLikedClass);
       } else {
@@ -110,31 +127,48 @@ function handleLikeButtonClick(cardId, cardLikeBtnEl) {
 }
 
 function handleImageClick(data) {
-  previewImageEl.src = data.link;
-  previewImageEl.alt = data.name;
-  previewCaptionEl.textContent = data.name;
+  // Defensive check: ensure data exists
+  if (!data) {
+    console.error("Card data is missing for preview");
+    return;
+  }
+
+  previewImageEl.src = data.link || "";
+  previewImageEl.alt = data.name || "Preview image";
+  previewCaptionEl.textContent = data.name || "";
   openModal(previewModal);
 }
 
 function getCardElement(data) {
+  // Defensive check: ensure data object exists
+  if (!data) {
+    console.error("Card data is null or undefined");
+    return null;
+  }
+
   const cardElement = cardTemplate.cloneNode(true);
   const cardTitleEl = cardElement.querySelector(".card__title");
   const cardImageEl = cardElement.querySelector(".card__image");
   const cardLikeBtnEl = cardElement.querySelector(".card__like-button");
   const cardDeleteBtnEl = cardElement.querySelector(".card__delete-button");
 
-  cardImageEl.src = data.link;
-  cardImageEl.alt = data.name;
-  cardTitleEl.textContent = data.name;
+  // Safely set image and title with fallbacks
+  cardImageEl.src = data.link || "";
+  cardImageEl.alt = data.name || "Card image";
+  cardTitleEl.textContent = data.name || "Untitled";
 
-  // Set initial like state
-  const isLiked = data.likes.some(user => user._id === currentUser._id);
-  if (isLiked) {
-    cardLikeBtnEl.classList.add(isLikedClass);
+  // Set initial like state with null checks
+  if (data.likes && Array.isArray(data.likes) && currentUser && currentUser._id) {
+    const isLiked = data.likes.some(user => user && user._id === currentUser._id);
+    if (isLiked) {
+      cardLikeBtnEl.classList.add(isLikedClass);
+    }
   }
 
   // Show delete button only for cards owned by current user
-  if (data.owner._id !== currentUser._id) {
+  if (data.owner && data.owner._id && currentUser && currentUser._id && data.owner._id !== currentUser._id) {
+    cardDeleteBtnEl.style.display = "none";
+  } else if (!data.owner || !currentUser) {
     cardDeleteBtnEl.style.display = "none";
   }
 
@@ -180,8 +214,16 @@ function handleCardSubmit(evt) {
 
   api.addCard(inputValues)
     .then((cardData) => {
+      // Defensive check for card data
+      if (!cardData) {
+        console.error("No card data returned from API");
+        return;
+      }
+
       const cardElement = getCardElement(cardData);
-      cardsList.prepend(cardElement);
+      if (cardElement) {
+        cardsList.prepend(cardElement);
+      }
       addCardFormElement.reset();
       closeModal(newPostModal);
       disableButton(cardSubmitBtn, validationConfig);
@@ -203,8 +245,14 @@ function handleEditProfileSubmit(evt) {
     about: editProfileDescriptionInput.value
   })
     .then((data) => {
-      profileNameEl.textContent = data.name;
-      profileDescriptionEl.textContent = data.about;
+      // Defensive check for response data
+      if (!data) {
+        console.error("No data returned from editUserInfo API");
+        return;
+      }
+
+      profileNameEl.textContent = data.name || "Unknown User";
+      profileDescriptionEl.textContent = data.about || "";
       closeModal(editProfileModal);
     })
     .catch(console.error)
@@ -220,6 +268,12 @@ function handleAvatarSubmit(evt) {
 
   api.editAvatarInfo(avatarInput.value)
     .then((data) => {
+      // Defensive check for response data
+      if (!data || !data.avatar) {
+        console.error("No avatar data returned from API");
+        return;
+      }
+
       profileAvatarEl.src = data.avatar;
       closeModal(avatarEditModal);
     })
@@ -275,21 +329,50 @@ previewModalCloseBtn.addEventListener("click", () => closeModal(previewModal));
 // ========== INITIALIZATION ==========
 enableValidation(validationConfig);
 
+// Set images on page load
+window.addEventListener('DOMContentLoaded', () => {
+  const headerLogo = document.querySelector('.header__logo');
+  const profileAvatar = document.querySelector('.profile__avatar');
+  const pencilIconEl = document.querySelector('.profile__pencil-icon');
+  const penIconEl = editProfileBtn.querySelector('img');
+  const plusIconEl = newPostBtn.querySelector('img');
+
+  if (headerLogo) headerLogo.src = logoImage;
+  if (profileAvatar) profileAvatar.src = avatarImage;
+  if (pencilIconEl) pencilIconEl.src = pencilIcon;
+  if (penIconEl) penIconEl.src = penIcon;
+  if (plusIconEl) plusIconEl.src = plusIcon;
+});
+
 api.getAppInfo()
   .then(([cards, userInfo]) => {
+    // Defensive check: ensure userInfo exists
+    if (!userInfo) {
+      console.error("User info is missing from API response");
+      return;
+    }
+
     // Store current user info
     currentUser = userInfo;
 
-    // Update profile information
-    profileNameEl.textContent = userInfo.name;
-    profileDescriptionEl.textContent = userInfo.about;
-    profileAvatarEl.src = userInfo.avatar;
+    // Update profile information with fallbacks
+    profileNameEl.textContent = userInfo.name || "Unknown User";
+    profileDescriptionEl.textContent = userInfo.about || "";
+    if (userInfo.avatar) {
+      profileAvatarEl.src = userInfo.avatar;
+    }
 
-    // Render initial cards
-    cards.forEach((card) => {
-      const cardElement = getCardElement(card);
-      cardsList.append(cardElement);
-    });
+    // Render initial cards with defensive checks
+    if (cards && Array.isArray(cards)) {
+      cards.forEach((card) => {
+        const cardElement = getCardElement(card);
+        if (cardElement) {
+          cardsList.append(cardElement);
+        }
+      });
+    } else {
+      console.error("Cards data is not an array or is missing");
+    }
   })
   .catch(console.error);
 
