@@ -32,9 +32,10 @@
   height: 36px;
   padding: 4px 10px;
   border-radius: 18px;
-  background: transparent;
+  background: rgba(33, 33, 33, 0.8);
   border: none;
   visibility: hidden;
+  transition: visibility 0.3s ease;
 }
 
 /* Show button on hover of the avatar container */
@@ -149,6 +150,11 @@
 
   .profile__avatar-btn::after {
     visibility: hidden;
+  }
+
+  .profile__avatar-container {
+    width: 80px;
+    height: 80px;
   }
 
   .profile__avatar {
