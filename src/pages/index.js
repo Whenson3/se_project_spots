@@ -2,14 +2,12 @@ import "../pages/index.css";
 import Api from "../utils/Api.js";
 import { enableValidation, config as validationConfig, resetValidation, disableButton } from "../scripts/validation.js";
 
-// ========== IMAGE IMPORTS ==========
 import logoImage from "../images/spots-images/Logo.svg";
 import avatarImage from "../images/spots-images/avatar.jpg";
 import pencilIcon from "../images/spots-images/pencil-light.svg";
 import penIcon from "../images/spots-images/pen-icon.svg";
 import plusIcon from "../images/spots-images/plus-icon.svg";
 
-// ========== API INITIALIZATION ==========
 const api = new Api({
   baseUrl: "https://around-api.en.tripleten-services.com/v1",
   headers: {
@@ -18,26 +16,19 @@ const api = new Api({
   }
 });
 
-// ========== CONSTANTS ==========
 const isLikedClass = "card__like-button_active";
 
-// ========== STATE VARIABLES ==========
-let currentUser = null;
-
-// ========== DOM SELECTORS ==========
-// Profile
+let selectedCard;
+let selectedCardId;
 const profileNameEl = document.querySelector(".profile__name");
 const profileDescriptionEl = document.querySelector(".profile__description");
 const profileAvatarEl = document.querySelector(".profile__avatar");
 const editProfileBtn = document.querySelector(".profile__edit-button");
 const avatarEditBtn = document.querySelector(".profile__avatar-btn");
 const newPostBtn = document.querySelector(".profile__add-button");
-
-// Cards
 const cardTemplate = document.querySelector("#card-template").content.querySelector(".card");
 const cardsList = document.querySelector(".cards__list");
 
-// Modals
 const editProfileModal = document.querySelector("#edit-profile-modal");
 const editProfileForm = document.querySelector("#edit-profile-form");
 const editProfileCloseBtn = editProfileModal.querySelector(".modal__close-btn");
@@ -67,11 +58,6 @@ const previewModalCloseBtn = previewModal.querySelector(".modal__close-btn");
 const previewImageEl = previewModal.querySelector(".modal__image");
 const previewCaptionEl = previewModal.querySelector(".modal__caption");
 
-// State Variables
-let selectedCard;
-let selectedCardId;
-
-// ========== MODAL FUNCTIONS ==========
 function handleEscapeKey(evt) {
   if (evt.key === "Escape") {
     const openedModalEl = document.querySelector(".modal_is-opened");
@@ -89,7 +75,6 @@ function closeModal(modal) {
   document.removeEventListener("keydown", handleEscapeKey);
 }
 
-// ========== UTILITY FUNCTIONS ==========
 function renderLoading(button, isLoading, loadingText = "Saving...") {
   if (isLoading) {
     button.dataset.originalText = button.textContent;
@@ -99,7 +84,6 @@ function renderLoading(button, isLoading, loadingText = "Saving...") {
   }
 }
 
-// ========== CARD FUNCTIONS ==========
 function handleLikeButtonClick(cardId, cardLikeBtnEl) {
   const isLiked = cardLikeBtnEl.classList.contains(isLikedClass);
   const likeAction = isLiked ? api.removeLike(cardId) : api.addLike(cardId);
@@ -108,11 +92,12 @@ function handleLikeButtonClick(cardId, cardLikeBtnEl) {
     .then(() => {
       cardLikeBtnEl.classList.toggle(isLikedClass);
     })
-    .catch(console.error);
+    .catch((error) => {
+      console.error("Error toggling like:", error);
+    });
 }
 
 function handleImageClick(data) {
-  // Defensive check: ensure data exists
   if (!data) {
     console.error("Card data is missing for preview");
     return;
@@ -125,7 +110,6 @@ function handleImageClick(data) {
 }
 
 function getCardElement(data) {
-  // Defensive check: ensure data object exists
   if (!data) {
     console.error("Card data is null or undefined");
     return null;
@@ -137,24 +121,12 @@ function getCardElement(data) {
   const cardLikeBtnEl = cardElement.querySelector(".card__like-button");
   const cardDeleteBtnEl = cardElement.querySelector(".card__delete-button");
 
-  // Safely set image and title with fallbacks
   cardImageEl.src = data.link || "";
   cardImageEl.alt = data.name || "Card image";
   cardTitleEl.textContent = data.name || "Untitled";
 
-  // Set initial like state with null checks
-  if (data.likes && Array.isArray(data.likes) && currentUser && currentUser._id) {
-   const isLiked = data.isLiked;
-  if (isLiked) {
+  if (data.isLiked) {
     cardLikeBtnEl.classList.add(isLikedClass);
-  }
-  }
-
-  // Show delete button only for cards owned by current user
-  if (data.owner && data.owner._id && currentUser && currentUser._id && data.owner._id !== currentUser._id) {
-    cardDeleteBtnEl.style.display = "none";
-  } else if (!data.owner || !currentUser) {
-    cardDeleteBtnEl.style.display = "none";
   }
 
   cardLikeBtnEl.addEventListener("click", () => handleLikeButtonClick(data._id, cardLikeBtnEl));
@@ -199,7 +171,6 @@ function handleCardSubmit(evt) {
 
   api.addCard(inputValues)
     .then((cardData) => {
-      // Defensive check for card data
       if (!cardData) {
         console.error("No card data returned from API");
         return;
@@ -219,7 +190,6 @@ function handleCardSubmit(evt) {
     });
 }
 
-// ========== FORM SUBMIT HANDLERS ==========
 function handleEditProfileSubmit(evt) {
   evt.preventDefault();
   const submitButton = editProfileForm.querySelector(".modal__submit-btn");
@@ -230,7 +200,6 @@ function handleEditProfileSubmit(evt) {
     about: editProfileDescriptionInput.value
   })
     .then((data) => {
-      // Defensive check for response data
       if (!data) {
         console.error("No data returned from editUserInfo API");
         return;
@@ -253,7 +222,6 @@ function handleAvatarSubmit(evt) {
 
   api.editAvatarInfo(avatarInput.value)
     .then((data) => {
-      // Defensive check for response data
       if (!data || !data.avatar) {
         console.error("No avatar data returned from API");
         return;
@@ -268,8 +236,6 @@ function handleAvatarSubmit(evt) {
     });
 }
 
-// ========== EVENT LISTENERS ==========
-// Modal Overlay Clicks
 const modals = document.querySelectorAll(".modal");
 modals.forEach((modal) => {
   modal.addEventListener("mousedown", (evt) => {
@@ -279,7 +245,6 @@ modals.forEach((modal) => {
   });
 });
 
-// Edit Profile Modal
 editProfileBtn.addEventListener("click", () => {
   editProfileNameInput.value = profileNameEl.textContent;
   editProfileDescriptionInput.value = profileDescriptionEl.textContent;
@@ -289,7 +254,6 @@ editProfileBtn.addEventListener("click", () => {
 editProfileCloseBtn.addEventListener("click", () => closeModal(editProfileModal));
 editProfileForm.addEventListener("submit", handleEditProfileSubmit);
 
-// Avatar Edit Modal
 avatarEditBtn.addEventListener("click", () => {
   avatarInput.value = profileAvatarEl.src;
   resetValidation(avatarForm, [avatarInput]);
@@ -298,23 +262,18 @@ avatarEditBtn.addEventListener("click", () => {
 avatarEditCloseBtn.addEventListener("click", () => closeModal(avatarEditModal));
 avatarForm.addEventListener("submit", handleAvatarSubmit);
 
-// New Post Modal
 newPostBtn.addEventListener("click", () => openModal(newPostModal));
 newPostCloseBtn.addEventListener("click", () => closeModal(newPostModal));
 addCardFormElement.addEventListener("submit", handleCardSubmit);
 
-// Delete Modal
 deleteModalCloseBtn.addEventListener("click", () => closeModal(deleteModal));
 deleteCancelBtn.addEventListener("click", () => closeModal(deleteModal));
 deleteForm.addEventListener("submit", handleDeleteSubmit);
 
-// Preview Modal
 previewModalCloseBtn.addEventListener("click", () => closeModal(previewModal));
 
-// ========== INITIALIZATION ==========
 enableValidation(validationConfig);
 
-// Set images on page load
 window.addEventListener('DOMContentLoaded', () => {
   const headerLogo = document.querySelector('.header__logo');
   const profileAvatar = document.querySelector('.profile__avatar');
@@ -331,23 +290,17 @@ window.addEventListener('DOMContentLoaded', () => {
 
 api.getAppInfo()
   .then(([cards, userInfo]) => {
-    // Defensive check: ensure userInfo exists
     if (!userInfo) {
       console.error("User info is missing from API response");
       return;
     }
 
-    // Store current user info
-    currentUser = userInfo;
-
-    // Update profile information with fallbacks
     profileNameEl.textContent = userInfo.name || "Unknown User";
     profileDescriptionEl.textContent = userInfo.about || "";
     if (userInfo.avatar) {
       profileAvatarEl.src = userInfo.avatar;
     }
 
-    // Render initial cards with defensive checks
     if (cards && Array.isArray(cards)) {
       cards.forEach((card) => {
         const cardElement = getCardElement(card);

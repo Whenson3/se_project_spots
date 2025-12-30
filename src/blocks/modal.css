@@ -225,6 +225,12 @@
   color: #fff;
 }
 
+.modal__buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: flex-start;
+}
+
 @media screen and (max-width: 627px) {
   .modal__submit-btn {
     max-width: 276px;
@@ -243,6 +249,16 @@
 }
 .modal__image {
   max-width: unset;
+}
+
+.modal__buttons {
+  flex-direction: column;
+  gap: 8px;
+}
+
+.modal__delete-btn,
+.modal__cancel-btn {
+  width: 100%;
 }
 }
 
