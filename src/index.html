@@ -13,28 +13,37 @@
     <div class="page">
       <header class="header">
         <img
-          src="./images/spots-images/Logo.svg"
+          src=""
           alt="Spot logo"
           class="header__logo"
         />
       </header>
       <main class="content">
         <section class="profile page__section">
+          <div class="profile__avatar-container">
           <img
-            src="./images/spots-images/avatar.jpg"
+            src=""
             alt="Bessie Coleman"
             class="profile__avatar"
           />
+          <button class="profile__avatar-btn">
+            <img
+          src=""
+          alt="Pencil icon"
+          class="profile__pencil-icon"
+        />
+      </button>
+          </div>
           <div class="profile__column">
             <h1 class="profile__name">Bessie Coleman</h1>
             <p class="profile__description">Civil Aviator</p>
             <button type="button" class="profile__edit-button">
-              <img src="./images/spots-images/pen-icon.svg" alt="pen-icon" />
+              <img src="" alt="pen-icon" />
               Edit Profile
             </button>
           </div>
           <button type="button" class="profile__add-button">
-            <img src="./images/spots-images/plus-icon.svg" alt="plus-icon" />
+            <img src="" alt="plus-icon" />
             New Post
           </button>
         </section>
@@ -105,7 +114,7 @@
                   id="card-image-input"
                   type="url"
                   class="modal__input"
-                  name="description"
+                  name="image"
                   placeholder="Paste a link to the picture"
                   required
                 />
@@ -132,11 +141,47 @@
 
         <div class="modal modal_type-preview" id="preview-modal">
           <div class="modal__image-container">
-            <button type="button" aria-label ="Close model" class="modal__close-btn modal__close-btn_type_preview"></button>
+            <button type="button" aria-label="Close modal" class="modal__close-btn modal__close-btn_type_preview"></button>
             <img src="#" alt="" class="modal__image">
             <p class="modal__caption"></p>
           </div>
         </div>
+
+         <div class="modal" id="edit-avatar-modal">
+          <div class="modal__container">
+            <button type="button" class="modal__close-btn"></button>
+            <h2 class="modal__title">Edit avatar</h2>
+            <form class="modal__form" id="edit-avatar-form" novalidate>
+              <label for="profile-avatar-input" class="modal__label">
+                Avatar
+                <input
+                  id="profile-avatar-input"
+                  name="avatar"
+                  type="url"
+                  class="modal__input"
+                  placeholder="Avatar link"
+                  required
+                />
+                <span id="profile-avatar-input-error" class="modal__error"></span>
+              </label>
+             <button type="submit" class="modal__submit-btn">Save</button>
+            </form>
+          </div>
+        </div>
+
+           <div class="modal" id="delete-modal">
+          <div class="modal__container">
+            <button aria-label="Close modal" type="button" class="modal__close-btn"></button>
+            <h2 class="modal__title">Are you sure you want to delete this image?</h2>
+            <form class="modal__form" id="delete-form">
+              <div class="modal__buttons">
+                <button type="submit" class="modal__delete-btn">Delete</button>
+                <button type="button" class="modal__cancel-btn">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
     </div>
     </body>
 </html>

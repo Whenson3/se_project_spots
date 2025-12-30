@@ -19,7 +19,7 @@ module.exports = {
   devServer: {
     static: path.resolve(__dirname, "./dist"),
     compress: true,
-    port: 8080,
+    port: 8081, // or any unused port
     open: true,
     liveReload: true,
     hot: false,
@@ -27,7 +27,7 @@ module.exports = {
   target: ["web", "es5"],
   module: {
     rules: [
-       {
+      {
         test: /\.js$/,
         loader: "babel-loader",
         exclude: /node_modules/,
@@ -53,25 +53,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./src/index.html",
-    }),
-    new CleanWebpackPlugin(),
-    new MiniCssExtractPlugin(),
-  ],
-};
-
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-
-module.exports = {
-  // ... existing configuration
-  },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: "./src/index.html",
-      favicon: "./src/images/favicon.ico", // path to the favicon
+      template: "./src/index.html"
     }),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin(),

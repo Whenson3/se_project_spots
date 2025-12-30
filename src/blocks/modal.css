@@ -67,7 +67,7 @@
 
 
 .modal__close-btn {
-  background: transparent url(../images/spots-images/Group\ 27.svg) center no-repeat;
+  background: transparent url("../images/spots-images/Group 27.svg") center no-repeat;
   background-size: 35px 35px;
   color: rgba(33, 33, 33, 1);
   border: none;
@@ -178,12 +178,57 @@
 
 .modal__submit-btn-error {
   background-color: rgba(33, 33, 33, 1);
-  opacity: 50%;
+  opacity: 0.5;
 }
 
 .modal__submit-btn:hover {
   cursor: pointer;
-  opacity: 80%;
+  opacity: 0.8;
+}
+
+.modal__delete-btn {
+  width: 156px;
+  height: 52px;
+  border-radius: 8px;
+  padding: 18px 32px;
+  background: rgba(255, 101, 101, 1);
+  border: none;
+  color: #fff;
+  font-family: Poppins, Arial, Helvetica, sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.modal__delete-btn:hover {
+  cursor: pointer;
+  opacity: 0.8;
+  background: rgba(255, 51, 51, 1);
+}
+
+.modal__cancel-btn {
+  width: 156px;
+  height: 52px;
+  border-radius: 8px;
+  padding: 18px 32px;
+  border: 1px solid rgba(33, 33, 33, 1);
+  background: transparent;
+  color: #212121;
+  font-family: Poppins, Arial, Helvetica, sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.modal__cancel-btn:hover {
+  cursor: pointer;
+  opacity: 0.8;
+  background: rgba(33, 33, 33, 1);
+  color: #fff;
+}
+
+.modal__buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: flex-start;
 }
 
 @media screen and (max-width: 627px) {
@@ -204,6 +249,16 @@
 }
 .modal__image {
   max-width: unset;
+}
+
+.modal__buttons {
+  flex-direction: column;
+  gap: 8px;
+}
+
+.modal__delete-btn,
+.modal__cancel-btn {
+  width: 100%;
 }
 }
 
