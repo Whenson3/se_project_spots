@@ -104,54 +104,11 @@ function handleLikeButtonClick(cardId, cardLikeBtnEl) {
   const isLiked = cardLikeBtnEl.classList.contains(isLikedClass);
   const likeAction = isLiked ? api.removeLike(cardId) : api.addLike(cardId);
 
-  // Toggle button state optimistically for better UX
-  if (isLiked) {
-    cardLikeBtnEl.classList.remove(isLikedClass);
-  } else {
-    cardLikeBtnEl.classList.add(isLikedClass);
-  }
-
   likeAction
-    .then((updatedCard) => {
-      // Defensive check: ensure updatedCard and required properties exist
-      if (!updatedCard || !updatedCard.likes || !Array.isArray(updatedCard.likes)) {
-        console.error("Invalid card data received from API");
-        // Revert the optimistic update on error
-        if (isLiked) {
-          cardLikeBtnEl.classList.add(isLikedClass);
-        } else {
-          cardLikeBtnEl.classList.remove(isLikedClass);
-        }
-        return;
-      }
-      if (!currentUser || !currentUser._id) {
-        console.error("Current user data is missing");
-        // Revert the optimistic update on error
-        if (isLiked) {
-          cardLikeBtnEl.classList.add(isLikedClass);
-        } else {
-          cardLikeBtnEl.classList.remove(isLikedClass);
-        }
-        return;
-      }
-
-      // Verify the final state matches the API response
-      const isCardLiked = updatedCard.likes.some(user => user && user._id === currentUser._id);
-      if (isCardLiked) {
-        cardLikeBtnEl.classList.add(isLikedClass);
-      } else {
-        cardLikeBtnEl.classList.remove(isLikedClass);
-      }
+    .then(() => {
+      cardLikeBtnEl.classList.toggle(isLikedClass);
     })
-    .catch((error) => {
-      console.error(error);
-      // Revert the optimistic update on error
-      if (isLiked) {
-        cardLikeBtnEl.classList.add(isLikedClass);
-      } else {
-        cardLikeBtnEl.classList.remove(isLikedClass);
-      }
-    });
+    .catch(console.error);
 }
 
 function handleImageClick(data) {
@@ -187,10 +144,10 @@ function getCardElement(data) {
 
   // Set initial like state with null checks
   if (data.likes && Array.isArray(data.likes) && currentUser && currentUser._id) {
-    const isLiked = data.likes.some(user => user && user._id === currentUser._id);
-    if (isLiked) {
-      cardLikeBtnEl.classList.add(isLikedClass);
-    }
+   const isLiked = data.isLiked;
+  if (isLiked) {
+    cardLikeBtnEl.classList.add(isLikedClass);
+  }
   }
 
   // Show delete button only for cards owned by current user
